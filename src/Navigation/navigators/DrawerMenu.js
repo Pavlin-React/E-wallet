@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
 import {
   createDrawerNavigator,
@@ -8,9 +8,145 @@ import {
 import { McText, McImage } from "Components";
 import { Images } from "Constants";
 import { useTheme } from "styled-components/native";
-import { Home } from 'Screens'
+import { Home } from "Screens";
 
-let Drawer = createDrawerNavigator()
+let MENUs = [
+  {
+    name: "Home",
+    label: "Home",
+  },
+  {
+    name: "Profile",
+    label: "Profile",
+  },
+  {
+    name: "Accounts",
+    label: "Accounts",
+  },
+  {
+    name: "Transactions",
+    label: "Transactions",
+  },
+  {
+    name: "Stats",
+    label: "Stats",
+  },
+  {
+    name: "Settings",
+    label: "Settings",
+  },
+  {
+    name: "Help",
+    label: "Help",
+  },
+];
+
+let Drawer = createDrawerNavigator();
+
+let CustomDrawerContent = ({ navigation, theme }) => {
+  let [activeIndex, setActiveIndex] = useState(0);
+
+  return (
+    <View style={{ flex: 1 }}>
+      {/* Header */}
+      <View
+        style={{
+          width: 210,
+          height: 107,
+          borderBottomEndRadius: 107 / 2,
+          backgroundColor: theme.colors.background,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              backgroundColor: theme.colors.boxBackground,
+              marginRight: 10,
+            }}
+          >
+            <McImage source={Images.avatar1} />
+          </View>
+          <View>
+            <McText semi size={16} color={theme.colors.text1}>
+              Carol Brown
+            </McText>
+            <McText medium size={16} color={theme.colors.text3}>
+              Seattle, Washington
+            </McText>
+          </View>
+        </View>
+      </View>
+      {/* Drawer Items */}
+      <DrawerContentScrollView
+        scrollEnabled={false}
+        contentContainerStyle={{}}
+        style={{ marginLeft: -18 }}
+      >
+        {MENUs.map((menu, index) => {
+          return (
+            <DrawerItem
+              activeTintColor={theme.colors.boxBackground}
+              focused={activeIndex === index}
+              key={index}
+              label={({ focused }) => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 4,
+                        height: 33,
+                        marginRight: 26,
+                        backgroundColor: focused
+                          ? theme.colors.primary
+                          : "transparent",
+                      }}
+                    ></View>
+                    <McText size={16} bold={focused} color={theme.colors.text1}>
+                      {menu.label}
+                    </McText>
+                  </View>
+                );
+              }}
+            ></DrawerItem>
+          );
+        })}
+      </DrawerContentScrollView>
+      {/* Footer */}
+      <View style={{ marginLeft: 30, marginBottom: 27 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+          }}
+        >
+          <McImage
+            source={Images.logout}
+            style={{ tintColor: theme.colors.text2, marginRight: 8 }}
+          />
+          <McText bold size={16} color={theme.colors.text2} >Logout</McText>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const DrawerMenu = () => {
   let theme = useTheme();
@@ -22,16 +158,21 @@ const DrawerMenu = () => {
         overlayColor="transparent"
         drawerStyle={{
           flex: 1,
-          width: '60%',
-          backgroundColor: 'transparent'
+          width: "60%",
+          backgroundColor: "transparent",
         }}
         sceneContainerStyle={{
-          backgroundColor: 'transparent'
+          backgroundColor: "transparent",
         }}
         initialRouteName="Home"
+        drawerContent={(props) => {
+          return (
+            <CustomDrawerContent navigation={props.navigation} theme={theme} />
+          );
+        }}
       >
-        <Drawer.Screen name='Home' >
-          {(props) => <Home {...props} /> }
+        <Drawer.Screen name="Home">
+          {(props) => <Home {...props} />}
         </Drawer.Screen>
       </Drawer.Navigator>
     </View>
