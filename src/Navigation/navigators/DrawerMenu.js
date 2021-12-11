@@ -102,6 +102,7 @@ let CustomDrawerContent = ({ navigation, theme }) => {
               key={index}
               onPress={() => {
                 navigation.navigate(menu.name)
+                setActiveIndex(index)
               }}
               label={({ focused }) => {
                 return (
