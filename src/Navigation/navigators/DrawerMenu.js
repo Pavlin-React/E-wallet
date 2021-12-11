@@ -8,7 +8,8 @@ import {
 import { McText, McImage } from "Components";
 import { Images } from "Constants";
 import { useTheme } from "styled-components/native";
-import { Home } from "Screens";
+import { Home, Accounts, Profile, Settings, Stats, Help, Transactions  } from "Screens";
+import Animated from 'react-native-reanimated'
 
 let MENUs = [
   {
@@ -99,6 +100,9 @@ let CustomDrawerContent = ({ navigation, theme }) => {
               activeTintColor={theme.colors.boxBackground}
               focused={activeIndex === index}
               key={index}
+              onPress={() => {
+                navigation.navigate(menu.name)
+              }}
               label={({ focused }) => {
                 return (
                   <View
@@ -141,7 +145,14 @@ let CustomDrawerContent = ({ navigation, theme }) => {
             source={Images.logout}
             style={{ tintColor: theme.colors.text2, marginRight: 8 }}
           />
-          <McText bold size={16} color={theme.colors.text2} >Logout</McText>
+          <McText bold size={16} color={theme.colors.text2}>
+            Logout
+          </McText>
+        </View>
+        <View style={{ marginTop: 62 }}>
+          <McText bold size={10} color={theme.colors.text2} >
+            Version 2.0.1
+          </McText>
         </View>
       </View>
     </View>
@@ -149,7 +160,30 @@ let CustomDrawerContent = ({ navigation, theme }) => {
 };
 
 const DrawerMenu = () => {
+
+  let [progress, setProgress] = useState(new Animated.Value(0))
+
   let theme = useTheme();
+  // We do 3 animations here
+  let scale = Animated.interpolateNode(progress, {
+    inputRange: [0, 1],
+    outputRange: [1, 0.75]
+  })
+
+  let rotate = Animated.interpolateNode(progress, {
+    inputRange: [0, 1],
+    outputRange: ['0deg', '-10deg']
+  })
+
+  let borderRadius = Animated.interpolateNode(progress, {
+    inputRange: [0, 1],
+    outputRange: [1, 30]
+  })
+
+  let animatedStyle = {
+    borderRadius, transform: [{scale, rotateZ: rotate}]
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.boxBackground }}>
       <Drawer.Navigator
@@ -166,13 +200,34 @@ const DrawerMenu = () => {
         }}
         initialRouteName="Home"
         drawerContent={(props) => {
+          setTimeout(() => {
+            setProgress(props.progress)
+          }, 0)
           return (
             <CustomDrawerContent navigation={props.navigation} theme={theme} />
           );
         }}
       >
         <Drawer.Screen name="Home">
-          {(props) => <Home {...props} />}
+          {(props) => <Home {...props} animatedStyle={animatedStyle} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Profile">
+          {(props) => <Profile {...props} animatedStyle={animatedStyle} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Accounts">
+          {(props) => <Accounts {...props} animatedStyle={animatedStyle} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Help">
+          {(props) => <Help {...props} animatedStyle={animatedStyle} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Stats">
+          {(props) => <Stats {...props} animatedStyle={animatedStyle} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Settings">
+          {(props) => <Settings {...props} animatedStyle={animatedStyle} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Transactions">
+          {(props) => <Transactions {...props} animatedStyle={animatedStyle} />}
         </Drawer.Screen>
       </Drawer.Navigator>
     </View>

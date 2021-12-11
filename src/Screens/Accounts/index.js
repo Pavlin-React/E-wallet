@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useTheme } from 'styled-components/native';
 
-const Home = ({animatedStyle}) => {
+const Accounts = ({animatedStyle}) => {
 
     let theme = useTheme()
 
@@ -17,9 +17,9 @@ const Home = ({animatedStyle}) => {
                 ...animatedStyle,
             }}
         >
-            <Text>Home Screen</Text>
+            <Text>Accounts Screen</Text>
         </Animated.View>
     );
 };
 
-export default Home;
+export default Accounts;
