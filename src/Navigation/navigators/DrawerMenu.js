@@ -8,8 +8,16 @@ import {
 import { McText, McImage } from "Components";
 import { Images } from "Constants";
 import { useTheme } from "styled-components/native";
-import { Home, Accounts, Profile, Settings, Stats, Help, Transactions  } from "Screens";
-import Animated from 'react-native-reanimated'
+import {
+  Home,
+  Accounts,
+  Profile,
+  Settings,
+  Stats,
+  Help,
+  Transactions,
+} from "Screens";
+import Animated from "react-native-reanimated";
 
 let MENUs = [
   {
@@ -101,8 +109,8 @@ let CustomDrawerContent = ({ navigation, theme }) => {
               focused={activeIndex === index}
               key={index}
               onPress={() => {
-                navigation.navigate(menu.name)
-                setActiveIndex(index)
+                navigation.navigate(menu.name);
+                setActiveIndex(index);
               }}
               label={({ focused }) => {
                 return (
@@ -151,7 +159,7 @@ let CustomDrawerContent = ({ navigation, theme }) => {
           </McText>
         </View>
         <View style={{ marginTop: 62 }}>
-          <McText bold size={10} color={theme.colors.text2} >
+          <McText bold size={10} color={theme.colors.text2}>
             Version 2.0.1
           </McText>
         </View>
@@ -161,29 +169,29 @@ let CustomDrawerContent = ({ navigation, theme }) => {
 };
 
 const DrawerMenu = () => {
-
-  let [progress, setProgress] = useState(new Animated.Value(0))
+  let [progress, setProgress] = useState(new Animated.Value(0));
 
   let theme = useTheme();
   // We do 3 animations here
   let scale = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
-    outputRange: [1, 0.75]
-  })
+    outputRange: [1, 0.75],
+  });
 
   let rotate = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
-    outputRange: ['0deg', '-10deg']
-  })
+    outputRange: ["0deg", "-10deg"],
+  });
 
   let borderRadius = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
-    outputRange: [1, 30]
-  })
+    outputRange: [1, 30],
+  });
 
   let animatedStyle = {
-    borderRadius, transform: [{scale, rotateZ: rotate}]
-  }
+    borderRadius,
+    transform: [{ scale, rotateZ: rotate }],
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.boxBackground }}>
@@ -202,8 +210,8 @@ const DrawerMenu = () => {
         initialRouteName="Home"
         drawerContent={(props) => {
           setTimeout(() => {
-            setProgress(props.progress)
-          }, 0)
+            setProgress(props.progress);
+          }, 0);
           return (
             <CustomDrawerContent navigation={props.navigation} theme={theme} />
           );
