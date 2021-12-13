@@ -3,12 +3,28 @@ import { Text, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import DrawerMenu from "./DrawerMenu";
 
-import { Home, Accounts, Profile, Settings, Stats, Help, Transactions } from "Screens";
+import {
+  Home,
+  Accounts,
+  Profile,
+  SignIn,
+  Settings,
+  Stats,
+  Help,
+  Transactions,
+} from "Screens";
 
 const Stack = createStackNavigator();
 
 const Stacks = ({ params }) => (
-  <Stack.Navigator initialRouteName="Home">
+  <Stack.Navigator initialRouteName="SignIn">
+    <Stack.Screen
+      name="SignIn"
+      component={SignIn}
+      options={{
+        headerShown: false,
+      }}
+    />
     <Stack.Screen
       name="Home"
       component={DrawerMenu}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -143,7 +143,11 @@ let CustomDrawerContent = ({ navigation, theme }) => {
       </DrawerContentScrollView>
       {/* Footer */}
       <View style={{ marginLeft: 30, marginBottom: 27 }}>
-        <View
+        <TouchableOpacity
+          onPress={() => {
+            navigation.closeDrawer()
+            navigation.navigate('SignIn')
+          }}
           style={{
             flexDirection: "row",
             justifyContent: "flex-start",
@@ -157,7 +161,7 @@ let CustomDrawerContent = ({ navigation, theme }) => {
           <McText bold size={16} color={theme.colors.text2}>
             Logout
           </McText>
-        </View>
+        </TouchableOpacity>
         <View style={{ marginTop: 62 }}>
           <McText bold size={10} color={theme.colors.text2}>
             Version 2.0.1

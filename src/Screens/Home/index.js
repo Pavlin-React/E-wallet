@@ -142,10 +142,10 @@ const Home = ({ animatedStyle }) => {
                         height: 42,
                         borderRadius: 21,
                         borderWidth: 1,
-                        borderColor: 'rgba(58, 66, 118, 0.2)',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: theme.colors.boxBackground
+                        borderColor: "rgba(58, 66, 118, 0.2)",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: theme.colors.boxBackground,
                       }}
                     >
                       <McImage source={item.avatar} />
@@ -174,6 +174,54 @@ const Home = ({ animatedStyle }) => {
           style={{ width: 24, height: 25, tintColor: theme.colors.text2 }}
         />
       </HeaderSection>
+      <View>
+        <View
+          style={{
+            marginTop: 20,
+            marginHorizontal: 25,
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            flexWrap: "wrap",
+          }}
+        >
+          {dummyData.Services?.map((item, index) => {
+            return (
+              <View
+                key={item.id}
+                style={{
+                  height: 96,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginLeft: index === 0 || index === 4 ? 0 : 28,
+                  marginTop: index > 3 ? 20 : 0,
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 12,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: theme.colors.boxBackground,
+                  }}
+                >
+                  <McImage source={item.img} />
+                </TouchableOpacity>
+                  <McText
+                    semi
+                    size={10}
+                    color={theme.colors.text3}
+                    style={{ marginTop: 6, width: 52, textAlign: 'center'}}
+                  >
+                    {item.name}
+                  </McText>
+              </View>
+            );
+          })}
+        </View>
+      </View>
     </Animated.View>
   );
 };
